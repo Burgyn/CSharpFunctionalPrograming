@@ -7,24 +7,14 @@ using Xunit;
 
 namespace CSharpFunctionalPrograming
 {
- public class Program
+ public class Tests
     {
-        // Na začiatok skúsme napísať algoritmus na nasledovné zadanie.
-        // Napíšme funkciu, ktorá dostane na vstupe vetu a vráti vetu, v ktorej bude otočné poradie slov.
-        // Pre jednoduchosť berme, že oddeľovač slov je len medzera a neriešime veľkosť písmen.
-
-        // No a teraz to skúsme ešte raz bez použita cyklov a if-ov.
         [Fact]
         public static void ReverseSentenceTest()
         {
             "Bob has dog".ReverseSentence().Should().Be("dog has Bob");
         }
 
-        // Stretol som sa s názorom, že načo vedieť LINQ, veď u nás až tak s dátami nerobíme. Ja si ten if v cykle napíšem.
-        // Častokrát u ľudí, ktorý si neuvedomujú, že linq nie je len dotazovacím jazykom.
-        // Ale v kombinácií s delegátmi prináša do OOP jazyka prvky funkcionálneho programovania.
-
-        // Napíšte funkciu, ktorá každému písmenu vo vete zmení prvé písmeno na veľké.
         [Fact]
         public static void ToTitleCaseTest()
         {
@@ -36,8 +26,6 @@ namespace CSharpFunctionalPrograming
             //Bez použitia CultureInfo.CurrentCulture.TextInfo.ToTitleCase(phrase);
         }
 
-        // Napíšte funkciu, ktorá znásobí text, ktorý dostane na vstupe podľa patternu.
-        // Viď test.
         [Fact]
         public static void AccumTest()
         {
@@ -47,8 +35,6 @@ namespace CSharpFunctionalPrograming
                 .Be("A-Bb-Ccc-Dddd");
         }
 
-        // Napíšte funckiu, ktorá z textu vyberie najnižšie a najvyššie číslo.
-        // Predpokladajme, že tam budú naozaj len celé čísla a ich oddeľovač je medzera.
         [Fact]
         public static void HighAndLowTest()
         {
@@ -58,8 +44,6 @@ namespace CSharpFunctionalPrograming
                 .Be("42 -9");
         }
 
-        // Napíšte metódu, ktorá nájde, ktorá nájde v postupnosti znakov ten, ktorý tam chýba.
-        // Predpokladajme, že vždy chýba len jeden znak a že idú postupne.
         [Fact]
         public static void FindMessingLetterTest()
         {
@@ -72,9 +56,6 @@ namespace CSharpFunctionalPrograming
                 .Should().Be('G');
         }
 
-        // Máme pole čísel s duplicitami.
-        // Vypíšme ich zoradené na konzolu očistené od duplicít aj s ich početnosťou.
-        // Zoradené vzostupne podľa čísla.
         [Fact]
         public void GroupByWithCountShould()
         {
@@ -87,8 +68,6 @@ namespace CSharpFunctionalPrograming
                     });
         }
 
-        // Napíšme funkciu, ktorá spočíta mocniny čísel od 1 po zvolené číslo.
-        // Obmena, len párnych
         [Fact]
         public void SumOfPowersTest()
         {
@@ -99,7 +78,6 @@ namespace CSharpFunctionalPrograming
                 .Should().Be(338350);
         }
 
-        // Napíšte funkciu, ktorá vytvorí nové číslo z pôvodného tak, že číslice budú zostupné.
         [Fact]
         public void DescendingNumberTest()
         {
@@ -109,8 +87,6 @@ namespace CSharpFunctionalPrograming
                 .Be(544322111);
         }
 
-        // Napísať funkciu, ktorá vynásobi medzi sebou hodnoty dvoch kolekcií.
-        // V kolekciach nemusí byť rovnaký počet čísel.
         [Fact]
         public void MultiplicationTableTest()
         {
@@ -121,9 +97,6 @@ namespace CSharpFunctionalPrograming
                 .ShouldBeEquivalentTo(new List<int>() { 20, 48, 117, 165 });
         }
 
-        // Napíšme funkciu, ktorá ma vstupné parametre pole stringov a číslo k.
-        // Našou úlohou je vrátiť prvý najdlhší reťazec pozostávajúci z k po sebe nasledujúcich reťazcov odobraných v poli.
-        // ak n = 0 or k > n or k <= 0 return string.Empty
         [Fact]
         public void LongestConsecTest()
         {
