@@ -222,3 +222,17 @@ public void MapPeopleTest()
         .Should().BeEquivalentTo(names);
 }
 ```
+
+Napíšme vlastnú implementáciu linqovej where metódy
+
+```
+[Fact]
+public void FilterTest()
+{
+    Predicate<int> isEven = p => p % 2 == 0;
+
+    new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 }
+        .Filter(isEven)
+        .ShouldAllBeEquivalentTo(new List<int>() { 2, 4, 6, 8 });
+}
+```

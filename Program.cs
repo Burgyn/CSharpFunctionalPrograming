@@ -161,6 +161,16 @@ namespace CSharpFunctionalPrograming
             people.Select(p => p.Name)
                 .Should().BeEquivalentTo(names);
         }
+
+        [Fact]
+        public void FilterTest()
+        {
+            Predicate<int> isEven = p => p % 2 == 0;
+
+            new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 }
+                .Filter(isEven)
+                .ShouldAllBeEquivalentTo(new List<int>() { 2, 4, 6, 8 });
+        }
     }
 
     public class Person
@@ -238,6 +248,17 @@ namespace CSharpFunctionalPrograming
 
         public static IEnumerable<Person> MapNamesToPeople(this IEnumerable<string> names) =>
             names.Select(p => new Person() { Name = p });
+
+        public static IEnumerable<T> Filter<T>(this IEnumerable<T> values, Predicate<T> predicate)
+        {
+            foreach (var item in values)
+            {
+                if (predicate(item))
+                {
+                    yield return item;
+                }
+            }
+        }
 
     }
 }
