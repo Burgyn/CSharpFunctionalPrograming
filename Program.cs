@@ -7,7 +7,7 @@ using Xunit;
 
 namespace CSharpFunctionalPrograming
 {
- public class Tests
+    public class Tests
     {
         [Fact]
         public static void ReverseSentenceTest()
@@ -121,12 +121,34 @@ namespace CSharpFunctionalPrograming
                 .Should().Be("ixoyx3452zzzzzzzzzzzz");
         }
 
-        private static void UseZip()
+        [Fact]
+        public void TowerBuilderTest()
         {
-            foreach (var item in Enumerable.Zip(new int[] { 25, 45, 78 }, new string[] { "sk", "cz", "hu" }, (n, v) => $"{n} - {v}"))
-            {
-                System.Console.WriteLine(item);
-            }
+            1. TowerBuilder()
+                .ShouldAllBeEquivalentTo(new List<string>() { "*" });
+
+            2. TowerBuilder()
+                .ShouldAllBeEquivalentTo(new List<string>() { " * ", "***" });
+
+            3. TowerBuilder()
+                .ShouldAllBeEquivalentTo(new List<string>() { "  *  ", " *** ", "*****" });
+
+            4. TowerBuilder()
+                .ShouldAllBeEquivalentTo(new List<string>() { "   *   ", "  ***  ", " ***** ", "*******" });
+        }
+
+        [Fact]
+        public void ValidParenthesesTest()
+        {
+            "()".ValidParentheses().Should().BeTrue();
+            ")(()))".ValidParentheses().Should().BeFalse();
+            "(".ValidParentheses().Should().BeFalse();
+            "(())((()())())".ValidParentheses().Should().BeTrue();
+            ")((((".ValidParentheses().Should().BeFalse();
+            "))))))".ValidParentheses().Should().BeFalse();
+            "(((())))".ValidParentheses().Should().BeTrue();
+            "((((".ValidParentheses().Should().BeFalse();
+            "(((((f)))))".ValidParentheses().Should().BeTrue();
         }
 
         private static void GeneratePeople()
@@ -210,8 +232,20 @@ namespace CSharpFunctionalPrograming
             s.Count() < k || k <= 0 ? string.Empty :
             Enumerable.Range(0, s.Count() - k + 1)
             .Select(x => string.Join("", s.Skip(x).Take(k)))
-            .OrderByDescending(p=> p.Length)
+            .OrderByDescending(p => p.Length)
             .First();
 
+        public static IEnumerable<string> TowerBuilder(this int number) =>
+            Enumerable.Range(1, number)
+            .Select(p => $"{new string(' ', number - p)}{new string('*', (p*2 -1))}{new string(' ', number - p)}");
+
+        public static bool ValidParentheses(this string value) =>
+            Enumerable
+            .Range(0, value.Length)
+            .All(i => value[i] == '(' ? value.SkipWhile(c => c != ')').FirstOrDefault() == ')' : true)
+            &&
+            Enumerable
+            .Range(0, value.Length).Reverse()
+            .All(i => value[i] == ')' ? value.TakeWhile(c => c == '(').LastOrDefault() == '(' : true);
     }
 }

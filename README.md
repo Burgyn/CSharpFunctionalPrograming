@@ -150,3 +150,54 @@ public void LongestConsecTest()
         .Should().Be("ixoyx3452zzzzzzzzzzzz");
 }
 ```
+Zahrajme sa.
+
+Skúsme napísať TowerBuilder.
+
+Funkciu, ktorej zadáme výšku budovy a ona nám vráti jednotlivé poschodia.
+
+```
+[
+  '     *     ',
+  '    ***    ',
+  '   *****   ',
+  '  *******  ',
+  ' ********* ',
+  '***********'
+]
+```
+
+```
+[Fact]
+public void TowerBuilderTest()
+{
+    1. TowerBuilder()
+        .ShouldAllBeEquivalentTo(new List<string>() { "*" });
+
+    2. TowerBuilder()
+        .ShouldAllBeEquivalentTo(new List<string>() { " * ", "***" });
+
+    3. TowerBuilder()
+        .ShouldAllBeEquivalentTo(new List<string>() { "  *  ", " *** ", "*****" });
+
+    4. TowerBuilder()
+        .ShouldAllBeEquivalentTo(new List<string>() { "   *   ", "  ***  ", " ***** ", "*******" });
+}
+```
+
+Napíšme funkciu, ktorá zvaliduje vstupný string, či obsahuje sprváne uzátvorkované výrazy.
+
+```
+[Fact]
+public void ValidParenthesesTest()
+{
+    "()".ValidParentheses().Should().BeTrue();
+    ")(()))".ValidParentheses().Should().BeFalse();
+    "(".ValidParentheses().Should().BeFalse();
+    "(())((()())())".ValidParentheses().Should().BeTrue();
+    ")((((".ValidParentheses().Should().BeFalse();
+    "))))))".ValidParentheses().Should().BeFalse();
+    "(((())))".ValidParentheses().Should().BeTrue();
+    "((((".ValidParentheses().Should().BeFalse();
+}
+```
