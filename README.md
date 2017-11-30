@@ -201,3 +201,24 @@ public void ValidParenthesesTest()
     "((((".ValidParentheses().Should().BeFalse();
 }
 ```
+
+Napíšme funkciu, ktorá vygeneruje náhodné čísla.
+
+```
+var random = 20.GenerateRandom();
+```
+
+Napíšme funkciu, ktorá premapuje zoznam mien na zoznam osôb.
+
+```
+[Fact]
+public void MapPeopleTest()
+{
+    var names = new List<string>() { "Milan", "Zuzka", "Ninka", "Mišo", "Jano" };
+
+    var people = names.MapNamesToPeople();
+
+    people.Select(p => p.Name)
+        .Should().BeEquivalentTo(names);
+}
+```

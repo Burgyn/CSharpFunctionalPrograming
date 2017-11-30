@@ -151,36 +151,22 @@ namespace CSharpFunctionalPrograming
             "(((((f)))))".ValidParentheses().Should().BeTrue();
         }
 
-        private static void GeneratePeople()
+        [Fact]
+        public void MapPeopleTest()
         {
-            var random = new Random();
-            var data = new List<string>() { "Milan", "Fero", "Jano", "Evka", "Zuzka", "Katka" };
-            var i = 1;
-            foreach (var item in Enumerable.Range(1, 100).Select(_ => new Person()
-                {
-                    Id = i++,
-                        Name = data[random.Next(data.Count - 1)]
-                }))
-            {
-                System.Console.WriteLine($"{item.Id} - {item.Name}");
-            }
-        }
+            var names = new List<string>() { "Milan", "Zuzka", "Ninka", "Mišo", "Jano" };
 
-        class Person
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
+            var people = names.MapNamesToPeople();
 
+            people.Select(p => p.Name)
+                .Should().BeEquivalentTo(names);
         }
+    }
 
-        private static void GenerateRandomData_int()
-        {
-            var random = new Random();
-            foreach (var item in Enumerable.Range(1, 100).Select(_ => random.Next()))
-            {
-                System.Console.WriteLine(item);
-            }
-        }
+    public class Person
+    {
+        public string Name { get; set; }
+
     }
 
     public static class Extensions
@@ -242,10 +228,16 @@ namespace CSharpFunctionalPrograming
         public static bool ValidParentheses(this string value) =>
             Enumerable
             .Range(0, value.Length)
-            .All(i => value[i] == '(' ? value.SkipWhile(c => c != ')').FirstOrDefault() == ')' : true)
-            &&
+            .All(i => value[i] == '(' ? value.SkipWhile(c => c != ')').FirstOrDefault() == ')' : true) &&
             Enumerable
             .Range(0, value.Length).Reverse()
             .All(i => value[i] == ')' ? value.TakeWhile(c => c == '(').LastOrDefault() == '(' : true);
+
+        public static IEnumerable<int> GenerateRandom(this int count) =>
+            Enumerable.Range(0, count).Select((p) => new Random().Next());
+
+        public static IEnumerable<Person> MapNamesToPeople(this IEnumerable<string> names) =>
+            names.Select(p => new Person() { Name = p });
+
     }
 }
