@@ -362,9 +362,8 @@ public static int SumOfPowers(IEnumerable<int> values) => values.Select(p => p *
 ```
 2. Out variables
 
-```
-![](https://pbs.twimg.com/media/DIdkzaJXYAAWLEG.jpg:large)
-```
+![Out variables](https://pbs.twimg.com/media/DIdkzaJXYAAWLEG.jpg)
+
 3. Pattern matching
 ```
 if (node is BinaryExpression binExp)
