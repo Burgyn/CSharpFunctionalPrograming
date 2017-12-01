@@ -171,12 +171,20 @@ namespace CSharpFunctionalPrograming
                 .Filter(isEven)
                 .ShouldAllBeEquivalentTo(new List<int>() { 2, 4, 6, 8 });
         }
+
+        [Fact]
+        public void QuickSortTest()
+        {
+            var data = new List<int>() { 2, 8, 1, 4, 6, 9, 8, 7, 2, 45, 98, 41, 32, 23, 7 };
+
+            data.QuickSort2()
+                .ShouldAllBeEquivalentTo(new List<int>() { 1, 2, 2, 4, 6, 7, 7, 8, 8, 9, 23, 32, 41, 45, 98 });
+        }
     }
 
     public class Person
     {
         public string Name { get; set; }
-
     }
 
     public static class Extensions
@@ -260,5 +268,43 @@ namespace CSharpFunctionalPrograming
             }
         }
 
+        public static IEnumerable<T> QuickSort<T>(this IEnumerable<T> values) where T : IComparable
+        {
+            if (values == null || !values.Any())
+            {
+                return new List<T>();
+            }
+            var firstElement = values.First();
+            var rest = values.Skip(1);
+
+            var smallerElements = rest
+                .Where(i => i.CompareTo(firstElement) < 0)
+                .QuickSort();
+
+            var largerElements = rest
+                .Where(i => i.CompareTo(firstElement) >= 0)
+                .QuickSort();
+
+            return smallerElements
+                .Concat(new List<T> { firstElement })
+                .Concat(largerElements);
+        }
+
+        public static IEnumerable<T> QuickSort2<T>(this IEnumerable<T> values) where T : IComparable =>
+            values == null || !values.Any() ? new List<T>() :
+            values.Skip(1)
+            .SmallerThen(values.First())
+            .Concat(new List<T> { values.First() })
+            .Concat(values.Skip(1).LargerThen(values.First()));
+
+        public static IEnumerable<T> SmallerThen<T>(this IEnumerable<T> values, T firstElement) where T : IComparable =>
+            values
+            .Where(i => i.CompareTo(firstElement) < 0)
+            .QuickSort2();
+
+        public static IEnumerable<T> LargerThen<T>(this IEnumerable<T> values, T firstElement) where T : IComparable =>
+            values
+            .Where(i => i.CompareTo(firstElement) >= 0)
+            .QuickSort2();
     }
 }

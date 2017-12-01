@@ -17,6 +17,8 @@ No a teraz to skúsme ešte raz bez použita cyklov a if-ov.
 Častokrát u ľudí, ktorí si neuvedomujú, že linq nie je len dotazovacím jazykom.
 Ale v kombinácií s delegátmi prináša do OOP jazyka prvky funkcionálneho programovania.
 
+Dnes si ukážeme ako sa dá začať "funkcionálne" programovať, bez teórie.
+
 Napíšte funkciu, ktorá každému písmenu vo vete zmení prvé písmeno na veľké.
 ```
 [Fact]
@@ -185,7 +187,7 @@ public void TowerBuilderTest()
 }
 ```
 
-Napíšme funkciu, ktorá zvaliduje vstupný string, či obsahuje sprváne uzátvorkované výrazy.
+Napíšme funkciu, ktorá zvaliduje vstupný string, či obsahuje správne uzátvorkované výrazy.
 
 ```
 [Fact]
@@ -223,7 +225,7 @@ public void MapPeopleTest()
 }
 ```
 
-Napíšme vlastnú implementáciu linqovej where metódy
+Napíšme vlastnú implementáciu linqovej `Where` metódy
 
 ```
 [Fact]
@@ -236,3 +238,189 @@ public void FilterTest()
         .ShouldAllBeEquivalentTo(new List<int>() { 2, 4, 6, 8 });
 }
 ```
+
+Teraz si vyskúšajme napísať odľahčenú verziu quicksort-u.
+Klasickým imperatívnym spôsobom programovania by to mohlo vyzerať nasledovne:
+```
+public static List<T> QuickSort<T>(List<T> values) where T : IComparable
+{
+    if (values.Count == 0)
+    {
+        return new List<T>();
+    }
+
+    T firstElement = values[0];
+
+    var smallerElements = new List<T>();
+    var largerElements = new List<T>();
+    for (int i = 1; i < values.Count; i++)
+    {
+        var elem = values[i];
+        if (elem.CompareTo(firstElement) < 0)
+        {
+            smallerElements.Add(elem);
+        }
+        else
+        {
+            largerElements.Add(elem);
+        }
+    }
+
+    var result = new List<T>();
+    result.AddRange(QuickSort(smallerElements.ToList()));
+    result.Add(firstElement);
+    result.AddRange(QuickSort(largerElements.ToList()));
+
+    return result;
+}
+```
+
+My to skúsme napísať "funkcionálne" ako extension na `IEnumerable<T>`.
+Pokúsme sa čo najviac eliminovať kód highlevel funkcie.
+
+```
+[Fact]
+public void QuickSortTest()
+{
+    var data = new List<int>() { 2, 8, 1, 4, 6, 9, 8, 7, 2, 45, 98, 41, 32, 23, 7 };
+
+    data.QuickSort()
+        .ShouldAllBeEquivalentTo(new List<int>() { 1, 2, 2, 4, 6, 7, 7, 8, 8, 9, 23, 32, 41, 45, 98 });
+}
+```
+
+----
+Takto by to mohlo vyzerať napríklad v jazyku F#, ktorý je od začiatku hlavne funkcionálnym jazykom. :-)
+
+```
+let rec quicksort = function
+   | [] -> []
+   | first::rest ->
+        let smaller, larger = List.partition ((>=) first) rest
+        List.concat [quicksort smaller; [first]; quicksort larger]
+```
+
+----
+Predsa len málo, naozaj málo "teórie" na záver.
+
+Funkcionálne programovanie je "štýl" programovania pri ktorom sa zdôrazňujú funkcie a vyhýbame state mutation.
+Dva základné koncepty:
+1. Functions as first-class values
+
+    V týchto jazykoch môžete používať funkcie ako vstupy alebo výstupy pre ďalšie funkcie. Možete ich priradzovať do premenných a ukladať v koleciach.
+```
+    Func<int, bool> isEven = (i) => i % 2 == 0;
+    Func<int, int> pow = (i) => i * i;
+
+    var data = Enumerable.Range(0, 10000)
+        .Where(isEven)
+        .Select(pow);
+```
+2. Avoiding state mutation
+
+Výstup funkcie závisí len od vstupných parametrov a táto funkcie nesmie meniť stav vstupných parametrov, respektíve systému ako takého.
+
+```
+    var nums = Range(-10000, 20001).Reverse().ToList();
+
+    Action task1 = () => WriteLine(nums.Sum());
+    Action task2 = () => { nums.Sort(); WriteLine(nums.Sum()); };
+```
+
+Čo sa vypíše na konzolu?
+
+V mojom prípade to bolo:
+```
+1268
+0
+```
+
+Ale keď to napíšeme nasledovne:
+```
+var nums = Range(-10000, 20001).Reverse().ToList();
+
+Action task1 = () => WriteLine(nums.Sum());
+Action task2 = () => { WriteLine(nums.**OrderBy(p => p)**.Sum()); };
+
+Parallel.Invoke(task1, task2);
+```
+
+Teraz je už výsledok správny.
+
+----
+Microsoft sa snaží každou novou verziou C# viac podporovať funkcionálne programovanie.
+
+Novinky v posledných verziach:
+
+https://blogs.msdn.microsoft.com/dotnet/2016/08/24/whats-new-in-csharp-7-0/
+
+1. Expression Bodied Functions and Properties
+```
+public bool IsSet => true;
+
+public static int SumOfPowers(IEnumerable<int> values) => values.Select(p => p * p).Sum();
+```
+2. Out variables
+
+```
+![](https://pbs.twimg.com/media/DIdkzaJXYAAWLEG.jpg:large)
+```
+3. Pattern matching
+```
+if (node is BinaryExpression binExp)
+{
+    if (binExp.Left is MethodCallExpression mcExp && IsVbOperatorsExpression(mcExp))
+    {
+        return base.Visit(VisitVbOperatorsMethods(mcExp, binExp.NodeType));
+    }
+}
+```
+
+```
+switch(shape)
+{
+    case Circle c:
+        WriteLine($"circle with radius {c.Radius}");
+        break;
+    case Rectangle s when (s.Length == s.Height):
+        WriteLine($"{s.Length} x {s.Height} square");
+        break;
+    case Rectangle r:
+        WriteLine($"{r.Length} x {r.Height} rectangle");
+        break;
+    default:
+        WriteLine("<unknown shape>");
+        break;
+    case null:
+        throw new ArgumentNullException(nameof(shape));
+}
+```
+4. Tuples
+```
+(string first, string middle, string last) = LookupName(id1); // deconstructing declaration
+WriteLine($"found {first} {last}.");
+```
+5. Local Functions
+```
+public int Fibonacci(int x)
+{
+    if (x < 0) throw new ArgumentException("Less negativity please!", nameof(x));
+    return Fib(x).current;
+
+    (int current, int previous) Fib(int i)
+    {
+        if (i == 0) return (1, 0);
+        var (p, pp) = Fib(i - 1);
+        return (p + pp, p);
+    }
+}
+```
+6. Using static
+```
+public double Circumference
+   => PI * 2 * Radius;
+```
+
+Plánované novinky:
+- Record types (boilerplate-free immutable types)
+- Algebraic data types (a powerful addition to the type system)
