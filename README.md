@@ -422,3 +422,7 @@ public double Circumference
 Plánované novinky:
 - Record types (boilerplate-free immutable types)
 - Algebraic data types (a powerful addition to the type system)
+
+----
+Ak ostane čas:
+- Skúste napísať substring bez použitia substring.
