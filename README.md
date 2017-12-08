@@ -1,5 +1,4 @@
 # CSharpFunctionalPrograming
-Example of using Linq to functional programming in C #
 
 Na začiatok skúsme napísať algoritmus na nasledovné zadanie:
 
