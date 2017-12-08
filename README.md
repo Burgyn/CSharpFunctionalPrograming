@@ -426,3 +426,14 @@ Plánované novinky:
 ----
 Ak ostane čas:
 - Skúste napísať substring bez použitia substring.
+
+ToWeirdCase( "String" );//=> returns "StRiNg"
+ToWeirdCase( "Weird string case" );//=> returns "WeIrD StRiNg CaSe"
+
+
+Assert.AreEqual(true, IsPangram("The quick brown fox jumps over the lazy dog."));
+
+87 + 78 = 165; 165 + 561 = 726; 726 + 627 = 1353; 1353 + 3531 = 4884
+Assert.AreEqual(4, PalindromeChainLength(87));
+
+
