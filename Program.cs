@@ -195,12 +195,9 @@ namespace CSharpFunctionalPrograming
         public static string ToTitleCase(this string value) =>
             string.Join(" ", value.Split(' ').Select(p => $"{char.ToUpper(p[0])}{p.Substring(1)}"));
 
-        public static string Accum(this string value)
-        {
-            var i = 0;
-            return string.Join("-",
-                value.Select(c => $"{char.ToUpper(c)}{new String(char.ToLower(c), i++)}"));
-        }
+        public static string Accum(this string value) =>
+            string.Join("-",
+                value.Select((c, i) => $"{char.ToUpper(c)}{new String(char.ToLower(c), i)}"));
 
         public static string HighAndLow(this string value)
         {
