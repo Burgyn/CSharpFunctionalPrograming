@@ -61,7 +61,6 @@ ak `n = 0 or k > n or k <= 0 return string.Empty`
 { "wlwsasphmxx", "owiaxujylentrklctozmymu", "wpgozvxxiu" } |> 2 => "wlwsasphmxxowiaxujylentrklctozmymu"
 { "zone", "abigail", "theta", "form", "libe", "zas" } |> -2 => ""
 { "it", "wkppv", "ixoyx", "3452", "zzzzzzzzzzzz" } |> 3 => "ixoyx3452zzzzzzzzzzzz"
-}
 ```
 Zahrajme sa.
 
