@@ -92,7 +92,7 @@ Napíšme funkciu, ktorá zvaliduje vstupný string, či obsahuje správne uzát
 "))))))" => false
 "(((())))" => true
 "((((" => false
-}
+```
 
 Napíšme funkciu, ktorá vygeneruje náhodné čísla.
 
