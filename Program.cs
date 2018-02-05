@@ -23,7 +23,7 @@ namespace CSharpFunctionalPrograming
                 .Should()
                 .Be("How Can Mirrors Be Real If Our Eyes Aren't Real");
 
-            //Bez použitia CultureInfo.CurrentCulture.TextInfo.ToTitleCase(phrase);
+            // Bez použitia CultureInfo.CurrentCulture.TextInfo.ToTitleCase(phrase);
         }
 
         [Fact]

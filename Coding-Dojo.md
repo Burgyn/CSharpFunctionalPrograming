@@ -11,7 +11,7 @@ Napíšte funkciu, ktorá každému písmenu vo vete zmení prvé písmeno na ve
 ```
 "How can mirrors be real if our eyes aren't real" =>
         "How Can Mirrors Be Real If Our Eyes Aren't Real"
-        
+
 //Bez použitia CultureInfo.CurrentCulture.TextInfo.ToTitleCase(phrase);
 ```
 Napíšte funkciu, ktorá znásobí text, ktorý dostane na vstupe podľa patternu.
@@ -33,7 +33,7 @@ Máme pole čísel s duplicitami.
 Napíšme funkciu, ktorá ich zoradí a pridá k ním aj ich početosti.
 Zoradené vzostupne podľa čísla.
 ```
-{ 1, 2, 5, 4, 1, 3, 8, 1, 4, 5, 8, 4 } =>            
+{ 1, 2, 5, 4, 1, 3, 8, 1, 4, 5, 8, 4 } =>
   {(1, 3), (2, 1), (3, 1), (4, 3), (5, 2), (8, 2)}
 ```
 Napíšme funkciu, ktorá spočíta mocniny čísel od 1 po zvolené číslo.
@@ -56,7 +56,7 @@ Našou úlohou je vrátiť prvý najdlhší reťazec pozostávajúci z `k` po se
 ak `n = 0 or k > n or k <= 0 return string.Empty`
 ```
 { "zone", "abigail", "theta", "form", "libe", "zas", "theta", "abigail" } |> 2 => "abigailtheta"
-{ "ejjjjmmtthh", "zxxuueeg", "aanlljrrrxx", "dqqqaaabbb", "oocccffuucccjjjkkkjyyyeehh" } |> 1 => "oocccffuucccjjjkkkjyyyeehh"    
+{ "ejjjjmmtthh", "zxxuueeg", "aanlljrrrxx", "dqqqaaabbb", "oocccffuucccjjjkkkjyyyeehh" } |> 1 => "oocccffuucccjjjkkkjyyyeehh"
 { "itvayloxrp", "wkppqsztdkmvcuwvereiupccauycnjutlv", "vweqilsfytihvrzlaodfixoyxvyuyvgpck" } |> 2 => "wkppqsztdkmvcuwvereiupccauycnjutlvvweqilsfytihvrzlaodfixoyxvyuyvgpck"
 { "wlwsasphmxx", "owiaxujylentrklctozmymu", "wpgozvxxiu" } |> 2 => "wlwsasphmxxowiaxujylentrklctozmymu"
 { "zone", "abigail", "theta", "form", "libe", "zas" } |> -2 => ""
@@ -109,7 +109,7 @@ Napíšme funkciu, ktorá premapuje zoznam mien na zoznam osôb.
 Napíšme vlastnú implementáciu linqovej `Where` metódy
 
 ```
-{ 1, 2, 3, 4, 5, 6, 7, 8 } =>        
+{ 1, 2, 3, 4, 5, 6, 7, 8 } =>
   { 2, 4, 6, 8 }
 ```
 
@@ -294,15 +294,6 @@ Plánované novinky:
 
 ----
 Ak ostane čas:
-- Skúste napísať substring bez použitia substring.
-
-ToWeirdCase( "String" );//=> returns "StRiNg"
-ToWeirdCase( "Weird string case" );//=> returns "WeIrD StRiNg CaSe"
-
-
-Assert.AreEqual(true, IsPangram("The quick brown fox jumps over the lazy dog."));
-
-87 + 78 = 165; 165 + 561 = 726; 726 + 627 = 1353; 1353 + 3531 = 4884
-Assert.AreEqual(4, PalindromeChainLength(87));
+- Skúsme napísať metódu Sum.
 
 
