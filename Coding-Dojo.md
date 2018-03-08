@@ -1,4 +1,4 @@
-# CSharpFunctionalPrograming
+# CSharpFunctionalProgramming
 
 Na začiatok skúsme napísať algoritmus na nasledovné zadanie:
 
